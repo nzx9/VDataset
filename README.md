@@ -3,6 +3,8 @@
 ## Description
 
 Load video datasets to PyTorch DataLoader. (Custom Video Data set for PyTorch DataLoader)
+</br>
+**VDataset can be use to load 20BN-Jester dataset to the PyTorch DataLoader**
 
 ## Required Libraries
 

@@ -8,6 +8,7 @@ setuptools.setup(
     version="0.0.1",
     author="Navindu Dananga",
     author_email="navindum@protonmail.com",
+    license="MIT",
     description="Load video datasets to PyTorch DataLoader",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -20,4 +21,5 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=["pandas", "Pillow", "torch", "torchvision"],
+    key_words="pytorch, dataset, dataloader, videodata, video"
 )

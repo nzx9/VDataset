@@ -47,7 +47,7 @@ class VDataset(Dataset):
         if len(frames_list) == 0:
             raise FileNotFoundError('Error: No frames found.')
         elif (self.frames_limit_mode == "manual" or self.frames_limit_mode == "csv") and (len(frames_list) > self.frames_limit):
-            frames_list = frames_list[0: self.no_of_frames]
+            frames_list = frames_list[0: self.frames_limit]
 
         frames = [Image.open(f).convert('RGB') for f in frames_list]
 

@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 class VDataset(Dataset):
-    def __init__(self, csv_file: str, root_dir: str, file_format: str = "jpg", id_col_name: str = "video_id", label_col_name: str = "label", frames_limit_mode: str = None, frames_limit: int = 1, frames_limit_col_name: str = "frames", frame_resize: tuple = None, transform=None):
+    def __init__(self, csv_file: str, root_dir: str, file_format: str = "jpg", id_col_name: str = "video_id", label_col_name: str = "label", frames_limit_mode: str = None, frames_limit: int = 1, frames_limit_col_name: str = "frames", video_transforms=None):
         """
         Load video datasets to pytorch DataLoader
 
@@ -18,8 +18,7 @@ class VDataset(Dataset):
         frames_limit_mode       : Mode of the frame count detection ("manual", "csv" or else it auto detects all the frames available)
         frames_limit            : Number of frames in a video (required if frames_count_mode set to "manual")
         frames_limit_col_name   : Column name, where label is on the .csv file (required if frames_count_mode set to "csv")
-        frames_resize           : Resize the frames (Also this can be done on using transform too)
-
+        video_transforms        : Video Transforms (Refere https://github.com/hassony2/torch_videovision)
         """
         self.dataframe = pd.read_csv(csv_file)
         self.root_dir = root_dir
@@ -30,8 +29,7 @@ class VDataset(Dataset):
         self.frames_limit_mode = frames_limit_mode
         self.frames_limit = frames_limit
         self.frames_limit_col_name = frames_limit_col_name
-        self.frame_resize = frame_resize
-        self.transform = transform
+        self.transform = video_transforms
 
     def __getitem__(self, index):
         row = self.dataframe.iloc[index]
@@ -51,16 +49,11 @@ class VDataset(Dataset):
 
         frames = [Image.open(f).convert('RGB') for f in frames_list]
 
-        if self.frame_resize:
-            size = (self.frame_resize, self.frame_resize) if len(
-                self.frame_resize) == 1 else self.frame_resize
-            resize = transforms.Resize(size)
-            frames = [resize(frame) for frame in frames]
-
         if self.transform:
-            transformed_frames = [self.transform(frame) for frame in frames]
-            return transformed_frames, label
+            frames = self.transform(frames)
         return frames, label
 
     def __len__(self) -> int:
         return len(self.dataframe)
+
+    

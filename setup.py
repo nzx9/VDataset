@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vdataset",
-    version="0.0.2",
+    version="0.0.3",
     author="Navindu Dananga",
     author_email="navindum@protonmail.com",
     license="MIT",
@@ -20,6 +20,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    install_requires=["pandas", "Pillow", "torch", "torchvision"],
+    install_requires=["pandas", "Pillow", "torch"],
     key_words="pytorch, dataset, dataloader, videodata, video"
 )

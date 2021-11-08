@@ -24,7 +24,7 @@ Load video datasets to PyTorch DataLoader. (Custom Video Data set for PyTorch Da
 | frames_limit_mode | str/None | False | Mode of the frame count detection ("manual", "csv" or else it auto detects all the frames available) |
 | frames_limit | int | False | Number of frames in a video (required if frames_count_mode set to "manual") |
 | frames_limit_col_name | str | False |Column name, where label is on the .csv file (required if frames_count_mode set to "csv") |
-| video_transforms | tuple/None | False |        Video Transforms (Refere: https://github.com/hassony2/torch_videovision) |
+| video_transforms | tuple/None | False |        Video Transforms (Refere: <https://github.com/hassony2/torch_videovision>) |
 
 ## Usage
 

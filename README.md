@@ -9,7 +9,6 @@ Load video datasets to PyTorch DataLoader. (Custom Video Data set for PyTorch Da
 ## Required Libraries
 
 * torch
-* torchvision
 * Pillow
 * pandas
 

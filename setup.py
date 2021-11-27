@@ -21,5 +21,4 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=["pandas", "Pillow", "torch"],
-    key_words="pytorch, dataset, dataloader, videodata, video, vdataset, labelmap"
 )

@@ -1,4 +1,4 @@
-# VDataset
+# vdataset
 
 ![python](https://img.shields.io/static/v1?logo=python&labelColor=3776AB&color=ffffff&logoColor=ffffff&style=flat-square&label=%20&message=Python3)
 ![pytorch](https://img.shields.io/static/v1?logo=pytorch&labelColor=EE4C2C&color=ffffff&logoColor=ffffff&style=flat-square&label=%20&message=Pytorch)
@@ -11,24 +11,35 @@ Load video datasets to PyTorch DataLoader. (Custom Video Data set for PyTorch Da
 
 ## Required Libraries
 
-* torch
-* Pillow
-* pandas
+- torch
+- Pillow
+- pandas
 
-## Arguments for constructor
+## Arguments
 
-| Argument | Type | Required | Description|
-|----------|------|----------|------------|
-| csv_file  | str  | True     | Path to .csv file|
-| root_dir | str  | True     | Root Directory of the video dataset|
-| file_format| str | False    | File type of the frame images (ex: .jpg, .jpeg, .png)|
-| id_col_name | str | False   | Column name, where id/name of the video on the .csv file|
-| label_col_name | str | False | Column name, where label is on the .csv file |
-| frames_limit_mode | str/None | False | Mode of the frame count detection ("manual", "csv" or else it auto detects all the frames available) |
-| frames_limit | int | False | Number of frames in a video (required if frames_count_mode set to "manual") |
-| frames_limit_col_name | str | False |Column name, where label is on the .csv file (required if frames_count_mode set to "csv") |
-| video_transforms | tuple/None | False |        Video Transforms (Refere: <https://github.com/hassony2/torch_videovision>) |
-| label_map | LabelMap | False | Label Map of the Dataset |
+### LableMap Constructor
+
+| Argument        | Type      | Required | Default | Description                                                                        |
+| --------------- | --------- | -------- | ------- | ---------------------------------------------------------------------------------- |
+| labels_csv      | str       | False    | None    | The path to the csv file containing the labels and ids.                            |
+| labels_col_name | str       | False    | None    | The name of the column containing the labels. (Required if labels_csv is not None) |
+| ids_col_name    | str/ None | False    | None    | The name of the column containing the ids.                                         |
+| id_type         | type      | False    | int     | The type of the ids.                                                               |
+
+### VDataset constructor
+
+| Argument              | Type          | Required | Default  | Description                                                                                          |
+| --------------------- | ------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------- |
+| csv_file              | str           | True     | -        | Path to .csv file                                                                                    |
+| root_dir              | str           | True     | -        | Root Directory of the video dataset                                                                  |
+| file_format           | str           | False    | jpg      | File type of the frame images (ex: .jpg, .jpeg, .png)                                                |
+| id_col_name           | str           | False    | video_id | Column name, where id/name of the video on the .csv file                                             |
+| label_col_name        | str           | False    | label    | Column name, where label is on the .csv file                                                         |
+| frames_limit_mode     | str/None      | False    | None     | Mode of the frame count detection ("manual", "csv" or else it auto detects all the frames available) |
+| frames_limit          | int           | False    | 1        | Number of frames in a video (required if frames_count_mode set to "manual")                          |
+| frames_limit_col_name | str           | False    | frames   | Column name, where label is on the .csv file (required if frames_count_mode set to "csv")            |
+| video_transforms      | tuple/None    | False    | None     | Video Transforms (Refer: <https://github.com/hassony2/torch_videovision>)                            |
+| label_map             | LabelMap/None | False    | None     | Label Map of the Dataset                                                                             |
 
 ## Usage
 

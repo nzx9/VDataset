@@ -5,11 +5,11 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="vdataset",
-    version="0.0.3",
+    version="0.0.4",
     author="Navindu Dananga",
     author_email="navindum@protonmail.com",
     license="MIT",
-    description="Load video datasets to PyTorch DataLoader",
+    description="Load video datasets to PyTorch DataLoader and generate label maps",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/nzx9/VDataset",

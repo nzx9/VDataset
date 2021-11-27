@@ -26,7 +26,7 @@ Load video datasets to PyTorch DataLoader. (Custom Video Data set for PyTorch Da
 | ids_col_name    | str/ None | False    | None    | The name of the column containing the ids.                                         |
 | id_type         | type      | False    | int     | The type of the ids.                                                               |
 
-### VDataset constructor
+### VDataset Constructor
 
 | Argument              | Type          | Required | Default  | Description                                                                                          |
 | --------------------- | ------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------- |

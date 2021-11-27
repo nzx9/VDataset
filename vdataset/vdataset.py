@@ -2,7 +2,8 @@ from torch.utils.data import Dataset
 import pandas as pd
 from PIL import Image
 from pathlib import Path
-from vdataset import LabelMap
+from .labelmap import LabelMap
+
 
 class VDataset(Dataset):
     """

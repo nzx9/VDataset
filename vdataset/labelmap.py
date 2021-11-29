@@ -39,8 +39,12 @@ class LabelMap():
         Get the label of an id.
     to_id(label)
         Get the id of a label.
-    get_dict()
-        Get the label map.
+    map()
+        Get the label map as dict.
+    labels()
+        Get the list of labels.
+    print()
+        Print the label map as table.
     count()
         Get the number of labels.
     get_csv()
@@ -70,24 +74,45 @@ class LabelMap():
         for i in range(0, len(label_data)):
             row = label_data.iloc[i]
             if self.__label_map__.get(row[labels_col_name]) == None:
-                self.__label_count__ += 1
                 _id = self.__type__(self.__label_count__)
                 if ids_col_name != None:
                     _id = row[ids_col_name]
                 self.__label_map__[row[labels_col_name]] = _id
+                self.__label_count__ += 1
 
     def add(self, label):
+        """
+        Add a label to the label map.
+
+        Args
+        ----------
+        label -> string
+        """
         if self.__label_map__.get(label) == None:
+            self.__label_map__[label] = self.__type__(self.__label_count__)
             self.__cache_outdated__ = True
             self.__label_count__ += 1
-            self.__label_map__[label] = self.__type__(self.__label_count__)
 
-    def force_get(self, label):
+    def force_get(self, label) -> int:
+        """
+        Get the id of the given label, if id of the label is None then add the label and return id.
+
+        Args
+        ----------
+        label -> string
+        """
         if self.__label_map__.get(label) == None:
             self.add(label)
         return self.__label_map__.get(label)
 
     def to_text(self, id) -> str:
+        """
+        Get the label of an id.
+
+        Args
+        ----------
+        id -> int/ float
+        """
         if(self.__label_map_inv__ == None or self.__cache_outdated__):
             self.__label_map_inv__ = {v: k for k,
                                       v in self.__label_map__.items()}
@@ -95,13 +120,68 @@ class LabelMap():
         return self.__label_map_inv__[id]
 
     def to_id(self, label) -> int:
+        """
+        Get the id of the given label.
+
+        Args
+        ----------
+        label -> string
+        """
         return self.__label_map__[label]
 
-    def get_dict(self) -> dict:
+    def map(self) -> dict:
+        """
+        Get the label map as dict.
+
+        Args
+        ----------
+        None
+        """
         return self.__label_map__
 
+    def labels(self) -> list:
+        """
+        Get the list of lables
+
+        Args
+        ----------
+        None
+        """
+        lst = []
+        for label in self.__label_map__:
+            lst.append(label)
+        return lst
+
+    def print(self) -> None:
+        """
+        Print the label map as table
+
+        Args
+        ----------
+        None
+        """
+        print("{:>7} | {:<50}".format("ID", "LABEL"))
+        print("{:>7}+{:<50}".format("--------",
+              "----------------------------------------------"))
+        for label in self.__label_map__:
+            print("{:>7} | {:<50}".format(self.to_id(label), label))
+
     def count(self) -> int:
-        return self.__label_count__
+        """
+        Get the number of labels.
+
+        Args
+        ----------
+        None
+        """
+        return len(self.__label_map__)
 
     def get_csv(self) -> pd.DataFrame:
+        """
+        Get the data in the provided csv file.
+
+        Args
+        ----------
+        None
+        """
         return self.__label_data__

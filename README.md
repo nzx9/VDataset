@@ -52,10 +52,10 @@ from torchvideotransforms.volume_transforms import ClipToTensor # https://github
 from torchvideotransforms import video_transforms, volume_transforms # https://github.com/hassony2/torch_videovision
 
 # Create Label Map
-label_map = LabelMap(labels_csv="/path-to-csv/csv_file.csv", labels_col_name="label")
+label_map = LabelMap(labels_csv="/path-to-csv/csv_file.csv", labels_col_name="label") 
 
 print(label_map)
-print(label_map.get_dict())
+label_map.print() # printing the labels on label-map
 
 # Use Video Transformers
 video_transform_list = [video_transforms.RandomRotation(30),

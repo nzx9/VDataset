@@ -1,3 +1,4 @@
+from pandas.core import frame
 from torch.utils.data import Dataset
 import pandas as pd
 from PIL import Image
@@ -24,8 +25,8 @@ class VDataset(Dataset):
     label_col_name : str, optional
         The name of the column containing the labels. The default is "label".
     frames_limit_mode : str, optional
-        The mode to limit the number of frames. Can be "manual", "csv" or None. The default is None.
-    frames_limit : int, optional
+        The mode to limit the number of frames. Can be "manual", "csv" or None. The default is {"start" : 0, "end": None}. Ex: To cut 5 from start and 5 from end, use {"start" : 5, "end": -5}
+    frames_limit : dict, optional
         The number of frames to limit the dataset to. The default is 1.
     frames_limit_col_name : str, optional
         The name of the column containing the number of frames. The default is "frames".
@@ -40,7 +41,7 @@ class VDataset(Dataset):
         The VDataset object.
     """
 
-    def __init__(self, csv_file: str, root_dir: str, file_format: str = "jpg", id_col_name: str = "video_id", label_col_name: str = "label", frames_limit_mode: str = None, frames_limit: int = 1, frames_limit_col_name: str = "frames", video_transforms=None, label_map: LabelMap = None):
+    def __init__(self, csv_file: str, root_dir: str, file_format: str = "jpg", id_col_name: str = "video_id", label_col_name: str = "label", frames_limit_mode: str = None, frames_limit: dict = {"start" : 0, "end": None}, frames_limit_col_name: str = "frames", video_transforms=None, label_map: LabelMap = None):
         self.dataframe = pd.read_csv(csv_file)
         self.root_dir = root_dir
         self.file_format = '*{}'.format(
@@ -48,10 +49,14 @@ class VDataset(Dataset):
         self.id_col_name = id_col_name
         self.label_col_name = label_col_name
         self.frames_limit_mode = frames_limit_mode
-        self.frames_limit = frames_limit
         self.frames_limit_col_name = frames_limit_col_name
         self.transform = video_transforms
         self.label_map = label_map
+
+        
+        self.frames_limit = {"start": 0, "end": 0}
+        self.frames_limit["start"] = 0 if frames_limit["start"] == None else frames_limit["start"]
+        self.frames_limit["end"] = 0 if frames_limit["end"] == None else frames_limit["end"]
 
     def __getitem__(self, index):
         row = self.dataframe.iloc[index]
@@ -73,8 +78,10 @@ class VDataset(Dataset):
 
         if len(frames_list) == 0:
             raise FileNotFoundError('Error: No frames found.')
-        elif (self.frames_limit_mode == "manual" or self.frames_limit_mode == "csv") and (len(frames_list) > self.frames_limit):
-            frames_list = frames_list[0: self.frames_limit]
+        elif (self.frames_limit_mode == "manual" or self.frames_limit_mode == "csv"):
+            if (self.frames_limit["end"] == 0):
+                self.frames_limit["end"] = len(frames_list)
+            frames_list = frames_list[self.frames_limit["start"]: self.frames_limit["end"]]
 
         frames = [Image.open(f).convert('RGB') for f in frames_list]
 
